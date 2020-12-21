@@ -17,6 +17,7 @@ const AuthHandler = ({ onChange }) => {
                 <div>
                     <img src={user.photoURL} alt="user" />
                     <h1>Logged in as {user.displayName} (uid: {user.uid})</h1>
+                    <button onClick={() => auth.currentUser.getIdToken(true).then(jwt => console.log(jwt))}>Log JWT</button>
                     <button onClick={() => auth.signOut()}>Log out</button>
                 </div>
                 :
