@@ -1,7 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+
+import AuthHandler from './auth.js';
 
 function App() {
+
+  // Initialize state variables
+  const [user, setUser] = useState();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +25,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <AuthHandler onChange={setUser} />
     </div>
   );
 }
