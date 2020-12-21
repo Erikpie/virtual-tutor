@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AuthHandler from './auth.js';
 
@@ -8,6 +8,8 @@ function App() {
 
   // Initialize state variables
   const [user, setUser] = useState();
+
+  useEffect(() => console.log(user), [user]);
 
   return (
     <div className="App">
