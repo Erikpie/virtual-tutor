@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { auth, provider } from './firebase.js';
 
-
-
 const AuthHandler = ({ onChange }) => {
 
     const [user, setUser] = useState();
@@ -12,22 +10,21 @@ const AuthHandler = ({ onChange }) => {
     auth.onAuthStateChanged(user => setUser(user));
 
     return (
-        <div className="auth">
+        <nav className="navbar navbar-light bg-light">
+            <h4 className="navbar-brand mr-auto">Virtual Tutor</h4>
             {user ?
-                <div>
+                <form className="form-inline my-2 my-lg-0">
+                    <p>Logged in as {user.displayName} (uid: {user.uid})</p>
                     <img src={user.photoURL} alt="user" />
-                    <h1>Logged in as {user.displayName} (uid: {user.uid})</h1>
-                    <button onClick={() => auth.currentUser.getIdToken(true).then(jwt => console.log(jwt))}>Log JWT</button>
-                    <button onClick={() => auth.signOut()}>Log out</button>
-                </div>
+                    <button className="btn btn-outline-primary" onClick={() => auth.signOut()}>Log out</button>
+                </form>
                 :
-                <div>
-                    <h1>Not logged in</h1>
-                    <p>Log in or sign up</p>
-                    <button onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>
-                </div>
+                <form className="form-inline my-2 my-lg-0">
+                    <p>Not logged in</p>
+                    <button className="btn btn-success" onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>
+                </form>
             }
-        </div>
+        </nav>
     );
 };
 
