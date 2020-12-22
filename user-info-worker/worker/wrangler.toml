@@ -1,0 +1,11 @@
+name = "tutoring_app_db"
+type = "webpack"
+account_id = "978adb81a2d3eda93a57ae0156e736d5"
+workers_dev = true
+route = ""
+zone_id = ""
+
+kv-namespaces = [
+    { binding = "TUTORING_APP_USERS", id = "1ffb5f54f26d485b8556e6469bc20bfc", preview_id = "1ffb5f54f26d485b8556e6469bc20bfc" },
+    { binding = "JWKS", id = "6add1e91571b42fba4365dc93e6b7905", preview_id = "6add1e91571b42fba4365dc93e6b7905" }
+]
