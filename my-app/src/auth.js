@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { auth, provider } from './firebase.js';
-import { Navbar, Form, NavDropdown, FormControl, Nav, Button } from 'react-bootstrap';
+import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
+import Search from './components/Search';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
 
 const AuthHandler = ({ onChange }) => {
 
@@ -10,21 +13,21 @@ const AuthHandler = ({ onChange }) => {
     // Update user after an authentication changes
     auth.onAuthStateChanged(user => setUser(user));
 
-    return (
+
+return (
         <Navbar bg="light" expand="lg">
             <Navbar.Brand href="#home">Virtual Tutor</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                    <NavDropdown title="Temp" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
+                <Router>
+                <Switch>
+                    <div className="App">
+                        <Route path="/" />
+                        <Route path="/search" component={Search} />
+                    </div>
+                </Switch>
+                </Router>    
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Subject Search" className="mr-sm-2" />                </Form>
