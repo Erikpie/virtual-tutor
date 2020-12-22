@@ -1,0 +1,11 @@
+type User {
+    id: ID! @unique
+    subjects: [ String! ]
+    zoom: String!
+    live: Boolean
+}
+
+type Query {
+    allUsers: [User!]
+    usersByLiveFlag(live: Boolean!): [User!]
+}
