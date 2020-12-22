@@ -24,7 +24,7 @@ const AuthHandler = ({ onChange }) => {
                 <div>
                     <h1>Not logged in</h1>
                     <p>Log in or sign up</p>
-                    <button onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>)
+                    <button onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>
                 </div>
             }
         </div>
