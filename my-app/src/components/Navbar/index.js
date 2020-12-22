@@ -13,7 +13,7 @@ const Navbar = ({ user }) => {
                     <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Log Out</button>
                 </form> :
                 <form>
-                    <button className="btn btn-success" type="submit">Authenticate with Google</button>
+                    <button variant="outline-success">Sign in with Google</button>
                 </form>
             }
         </nav>
