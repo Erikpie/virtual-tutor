@@ -16,12 +16,12 @@ const AuthHandler = ({ onChange }) => {
                 <form className="form-inline my-2 my-lg-0">
                     <p>Logged in as {user.displayName} (uid: {user.uid})</p>
                     <img src={user.photoURL} alt="user" />
-                    <button className="btn btn-outline-primary" onClick={() => auth.signOut()}>Log out</button>
+                    <button className="btn btn-outline-primary" type="button" onClick={() => auth.signOut()}>Log out</button>
                 </form>
                 :
                 <form className="form-inline my-2 my-lg-0">
                     <p>Not logged in</p>
-                    <button className="btn btn-success" onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>
+                    <button className="btn btn-success" type="button" onClick={() => auth.signInWithPopup(provider)}>Authenticate with Google</button>
                 </form>
             }
         </nav>
