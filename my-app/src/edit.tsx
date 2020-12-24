@@ -1,21 +1,32 @@
-import { auth } from './firebase';
+import firebase from 'firebase/app';
+import { auth } from './firebaseInit';
 import { useState } from 'react';
+import Profile from './profile';
 
 const WORKER_ROUTE = 'https://tutoring_app_db.alucky0.workers.dev'
 
-function EditProfile({ user }) {
+interface ProfileInfo {
+    subjects: string[],
+    zoomLink: string
+}
 
-    const [formData, setFormData] = useState({ subjects: [], zoomLink: '' });
+function EditProfile({ user }: { user: firebase.User }) {
 
-    const handleSelect = e => {
+    const [formData, setFormData] = useState<ProfileInfo>({ subjects: [], zoomLink: '' });
+
+    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const options = Array.from(e.target.options);
         const selected = options.filter(s => s.selected);
         const subjects = selected.map(s => s.value);
         setFormData({ ...formData, subjects: subjects })
     }
 
-    const saveProfile = async event => {
+    const saveProfile = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
+
+        if (!auth.currentUser) {
+            return;
+        }
 
         const authToken = await auth.currentUser.getIdToken(true);
         const requestOptions = {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 const WORKER_ROUTE = 'https://tutoring_app_db.alucky0.workers.dev'
 
-function Profile({ user_id }) {
+function Profile({ user_id }: { user_id: string }) {
 
     const [data, setData] = useState({subjects: [], zoomLink: ''});
 

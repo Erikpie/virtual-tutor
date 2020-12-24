@@ -15,7 +15,7 @@ const firebaseConfig = {
 };
 
 // Firebase app was getting initialized twice before, no idea why, just added this to fix it. Should get rid of this later
-var app;
+let app: firebase.app.App;
 if (!firebase.apps.length) {
     app = firebase.initializeApp(firebaseConfig);
 } else {

@@ -4,6 +4,8 @@ import Navigation from './components/Navigation';
 import Search from './components/Search';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import firebase from 'firebase/app';
+
 import AuthHandler from './auth';
 import Profile from './profile';
 import EditProfile from './edit';
@@ -14,7 +16,7 @@ import EditProfile from './edit';
 function App() {
 
   // Initialize state variables
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<firebase.User>();
   const [profile, setProfile] = useState("");
 
   // Debugging code

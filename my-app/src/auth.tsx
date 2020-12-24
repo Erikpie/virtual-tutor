@@ -1,18 +1,18 @@
+import firebase from 'firebase/app';
 import { useEffect, useState } from 'react';
-import { auth, provider } from './firebase.js';
+import { auth, provider } from './firebaseInit.js';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import Search from './components/Search';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+// TODO: FIX ANY IN ONCHANGE
+const AuthHandler = ({ onChange }: { onChange: any }) => {
 
-const AuthHandler = ({ onChange }) => {
-
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<firebase.User | null>(null);
     useEffect(() => onChange(user), [user, onChange]);
 
     // Update user after an authentication changes
     auth.onAuthStateChanged(user => setUser(user));
-
 
 return (
         <Navbar bg="light" expand="lg">
@@ -35,8 +35,8 @@ return (
                 {user ?
                     <form className="form-inline my-2 my-lg-0">
                         <p>Logged in as {user.displayName} (uid: {user.uid})</p>
-                        <img src={user.photoURL} alt="user" />
-                        <button className="btn btn-outline-primary" type="button" onClick={() => auth.signOut()}>Log out</button>
+                        {user.photoURL ? <img src={user.photoURL} alt="user" /> : ''}
+                        <button className="btn btn-outline-primary" type="button" onClick={auth.signOut}>Log out</button>
                     </form>
                     :
                     <form className="form-inline my-2 my-lg-0">
