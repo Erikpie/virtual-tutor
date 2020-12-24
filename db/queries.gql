@@ -1,0 +1,31 @@
+mutation AddUser {
+  createUser(data: {
+			uid: "LnSCwtDjRfhbdGMU3esRKGtrHEi2"
+  }) {
+    _id
+    uid
+  }
+}
+
+query UserByID($id: ID!) {
+  userById(uid: $id) {
+    data {
+      _id
+      uid
+      zoom
+      subjects
+    }
+  }
+}
+
+query GetUsers {
+  allUsers {
+    data {
+			_id
+      uid
+      zoom
+      subjects
+    }
+  }
+}
+
