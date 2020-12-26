@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import { useEffect, useState } from 'react';
-import { auth, provider } from './firebaseInit.js';
+import { auth, provider } from './firebaseInit';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import Search from './components/Search';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
