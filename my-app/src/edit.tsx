@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import { auth } from './firebaseInit';
 import { useState } from 'react';
-import Profile from './profile';
 
 const WORKER_ROUTE = 'https://tutoring_app_db.alucky0.workers.dev'
 
