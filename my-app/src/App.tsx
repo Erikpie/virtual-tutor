@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 import AuthHandler from './auth';
 import Profile from './profile';
 import EditProfile from './edit';
+import { Nav } from 'react-bootstrap';
 
 //const WORKER_ROUTE = 'http://localhost:8787';
 //const WORKER_ROUTE = 'https://tutoring_app_db.alucky0.workers.dev'
@@ -25,8 +26,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <AuthHandler onChange={setUser} />
         <Navigation />
+        <AuthHandler onChange={setUser} />
         <Switch>
           <Route path="/search" component={Search} />
         </Switch>
