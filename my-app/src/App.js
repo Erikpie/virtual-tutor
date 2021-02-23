@@ -1,6 +1,10 @@
 import './App.css';
+import { useState } from 'react';
 import Navigation from './components/Navigation';
 import Search from './components/Search';
+import Whiteboard from './components/Whiteboard'
+import Home from './components/Home'
+import Login from './components/Login'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 //const WORKER_ROUTE = 'http://localhost:8787';
@@ -16,15 +20,12 @@ function App() {
         <Navigation />
         <Switch>
           <Route path="/search" component={Search} />
+          <Route path="/Whiteboard" component={Whiteboard} />
+          <Route path="/login" component={Login} />
+
+          // home must come last
+          <Route path="/" component={Home} />
         </Switch>
-        <br/>
-        <div className="container-fluid">
-        </div>
-        <hr />
-        <div className="container-fluid">
-          <div className="form-group">
-          </div>
-        </div>
       </div>
     </Router>
   );
