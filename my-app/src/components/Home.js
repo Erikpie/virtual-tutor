@@ -1,11 +1,17 @@
 import React from 'react';
-
-
+import {Container, Row, Col} from 'react-bootstrap';
 function Home() {
     return(
-        <div>
-            <h3>Welcome home!</h3>
-        </div>
+    	<Container>
+    		<Row>
+			<Col>Apple</Col>
+			<Col>Save your education</Col>
+			</Row>
+			<Row>
+			<Col>Available Tutors</Col>
+			<Col>Live Classes</Col>
+			</Row>
+        </Container>
     );
 }
 export default Home;
