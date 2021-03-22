@@ -1,15 +1,19 @@
 import React from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Button} from 'react-bootstrap';
 import './Home.css'
 function Home() {
     return(
     	<Container className="quadBox">
     		<Row>
 			<Col className="quadrant">
-				<img className="logo" src={"/img/apple.jpg"}/>
+				<img className="apple" src={"/img/apple.jpg"}/>
 			</Col>
-			<Col>
-				Save your education
+			<Col className="save">
+				<p className="saveDesc">
+					Live web tutoring to save your class grades.<br/>
+					<Button style={{'background-color': 'black', 'border-color': 'white'}}>Start learning</Button>
+
+				</p>
 			</Col>
 			</Row>
 			<Row>
