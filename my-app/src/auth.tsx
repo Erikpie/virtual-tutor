@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { auth, provider } from './firebaseInit';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 
+
 // TODO: FIX ANY IN ONCHANGE
 const AuthHandler = ({ onChange }: { onChange: any }) => {
 
@@ -13,9 +14,19 @@ const AuthHandler = ({ onChange }: { onChange: any }) => {
     // Update user after an authentication changes
     auth.onAuthStateChanged(user => setUser(user));
 
-    if (user && user.email !== null && user.displayName !== null){
-     writeUserData(user.uid, user.displayName, user.email, false, false);
-     console.log("stored "+user.displayName+" in database");
+    //Making sure not to overwrite users in the db
+    if (user){
+        var new_user = firebase.database().ref('users/' + user.uid);
+        new_user.once("value")
+        .then(function(snapshot) {
+            if (snapshot.exists()){
+                console.log(user.email + " is already in the database");
+            }
+            else if (user.displayName !== null && user.email !== null) {
+                writeUserData(user.uid, user.displayName, user.email, false, false);
+                console.log("stored "+user.displayName+" in database");
+            }
+        });
     }
 
 return (
