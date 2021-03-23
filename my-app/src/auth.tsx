@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { writeUserData, setUserAdmin, setUserTutor} from './database';
 import { useEffect, useState } from 'react';
 import { auth, provider } from './firebaseInit';
 import { Navbar, Nav, Button } from 'react-bootstrap';
@@ -12,6 +13,11 @@ const AuthHandler = ({ onChange }: { onChange: any }) => {
     // Update user after an authentication changes
     auth.onAuthStateChanged(user => setUser(user));
 
+    if (user && user.email !== null && user.displayName !== null){
+     writeUserData(user.uid, user.displayName, user.email, false, false);
+     console.log("stored "+user.displayName+" in database");
+    }
+
 return (
     <Navbar bg="light" expand="lg">
         <Nav className="mr-auto">
@@ -20,7 +26,8 @@ return (
             <form className="form-inline my-2 my-lg-0">
                 <p>Logged in as {user.displayName} (uid: {user.uid})</p>
                 {user.photoURL ? <img src={user.photoURL} alt="user" /> : ''}
-                <button className="btn btn-outline-primary" type="button" onClick={auth.signOut}>Log out</button>
+                <button className="btn btn-outline-primary" type="button" onClick={() => 
+                    auth.signOut() }>Log out</button>
             </form>
             :
             <form className="form-inline my-2 my-lg-0">
