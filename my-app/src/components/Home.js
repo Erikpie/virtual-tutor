@@ -1,7 +1,9 @@
 import React from 'react';
 import {Container, Row, Col, Button} from 'react-bootstrap';
+import { List, Divider } from '@material-ui/core';
 import './Home.css'
 function Home() {
+	let available_tutors = [];
     return(
     	<Container className="quadBox">
     		<Row>
@@ -17,7 +19,15 @@ function Home() {
 			</Col>
 			</Row>
 			<Row>
-			<Col>Available Tutors</Col>
+			<Col>
+				<Row>
+					<h1>Available Tutors</h1>
+				</Row>
+				<Divider/>
+				<Row>
+					
+				</Row>
+			</Col>
 			<Col>Live Classes</Col>
 			</Row>
         </Container>
