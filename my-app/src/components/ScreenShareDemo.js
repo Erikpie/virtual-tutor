@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect, useCallback } from "react"
 import firebase from "firebase/app"
 import "firebase/database"
 
+// FIXME: Change out this API key and invalidate it so it can't be abused
+// Future versions should NOT have this hardcoded!
 var config = {
   apiKey: "AIzaSyBLfvlNwNehgXM2jCzx75wADA5xRssDChs",
   authDomain: "live-web-tutor.firebaseapp.com",
@@ -21,11 +23,18 @@ const stunServers = {
 }
 
 /**
- * TODO: Allow reconnect of screen share
- * TODO: Integrate demo into actual product
- * Uses WebRTC for video screen sharing and Firebase for signaling in
+ * Uses WebRTC for video screen sharing and Firebase RealtimeDB for signaling in
  * order to actually connect to video streams.
  * https://youtu.be/WmR9IMUD_CY
+ * https://firebase.google.com/docs/database/web/structure-data
+ * https://webrtc.org/getting-started/peer-connections
+ *
+ * TODO: Integrate demo into actual product once room functionality is finished
+ * TODO: Set a timer for DB to clear room data if the host terminates unexpectedly
+ *       This will require a backend or cloud function to achieve
+ * TODO: Do some memory cleanup for the host when a peer leaves the
+ *       call/disconnects. This is very difficult to do if we stick with
+ *       a client side only approach
  */
 const ScreenShareDemo = () => {
   const [sharing, setSharing] = useState(false)
@@ -113,7 +122,6 @@ const ScreenShareDemo = () => {
 
       // Watch for connection state changes on host
       pc.onconnectionstatechange = () => {
-        // console.log(pc.iceConnectionState)
         if (pc.iceConnectionState === "connected") {
           setNumViewers(numViewers + 1)
         }
@@ -191,14 +199,14 @@ const ScreenShareDemo = () => {
 
   // This gets called when the broadcaster wants to stop sharing their screen
   // or when they disconnect from the video stream
-  // TODO: Find some way to cleanup the signaling DB when the host/audience
-  // closes the browser instead of clicking the disconnect button
   const stopSharing = () => {
+    if (isHost) {
+      // Remove signaling info from database
+      // for all peers
+      database.ref("rooms").child(joinKey).remove()
+    }
     stream.getTracks().forEach((track) => track.stop())
     videoContainer.current.srcObject = null
-    // Remove signaling info from database
-    // for all peers
-    database.ref("rooms").child(joinKey).remove()
     setStream()
     setSharing(false)
   }
@@ -258,7 +266,6 @@ const ScreenShareDemo = () => {
           <div>
             <p>{joinKey}</p>
           </div>
-          <button onClick={startSharing}>Add user</button>
           <button onClick={stopSharing}>Stop sharing</button>
         </div>
       ) : (
