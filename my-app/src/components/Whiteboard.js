@@ -28,7 +28,6 @@ class Whiteboard extends React.Component<propType> {
   onSketchChange = event => {
   	console.log(this.sketchRef.current.toJSON());
   }
-
   render() {
     return (
       <div>
