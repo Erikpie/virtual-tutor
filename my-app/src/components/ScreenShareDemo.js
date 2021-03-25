@@ -25,7 +25,7 @@ const stunServers = {
  *       This will require a backend or cloud function to achieve
  * TODO: Do some memory cleanup for the host when a peer leaves the
  *       call/disconnects. This is very difficult to do if we stick with
- *       a client side only approach
+ *       a client only approach to webRTC signaling
  */
 const ScreenShareDemo = () => {
   const [sharing, setSharing] = useState(false)
@@ -58,6 +58,9 @@ const ScreenShareDemo = () => {
     setIsHost(true)
   }
 
+  // addSession() sets up the actual webRTC peer connection and sends information
+  // to the signaling database in order to generate a peer connection session
+  // that'll let a user join and see the host's screen
   const addSession = useCallback(
     async (roomID, localStream) => {
       // Create a new webRTC signaling session in DB
@@ -121,7 +124,9 @@ const ScreenShareDemo = () => {
     [peerConnections, numViewers]
   )
 
-  // Used to join a user who's already broadcasting
+  // Used to join a user who's already broadcasting. It essentially
+  // creates a response to the host's webRTC peer connection after
+  // it gets the necessary connection information from the signaling database
   const joinSharing = async () => {
     // Create a peer connection
     const pc = new RTCPeerConnection(stunServers)
@@ -160,7 +165,7 @@ const ScreenShareDemo = () => {
     }
 
     // Get host signaling information and add your own signaling information
-    // to the signaling DB
+    // to the signaling DB after seeing the host details
     const offerDoc = await screenSessionDoc.child("offer").get()
     const offerDesc = await offerDoc.val()
     await pc.setRemoteDescription(new RTCSessionDescription(offerDesc))
@@ -170,7 +175,6 @@ const ScreenShareDemo = () => {
       type: answerDescription.type,
       sdp: answerDescription.sdp,
     }
-
     await screenSessionDoc.update({ answer })
 
     // Get host ICE candidates to establish peer connection
@@ -189,13 +193,14 @@ const ScreenShareDemo = () => {
   }
 
   // This gets called when the broadcaster wants to stop sharing their screen
-  // or when they disconnect from the video stream
+  // or when a viewer disconnects from the call
   const stopSharing = () => {
     if (isHost) {
-      // Remove signaling info from database
-      // for all peers
+      // Remove signaling info from database for all peers since the
+      // screen sharing session is over
       database.ref("rooms").child(joinKey).remove()
     }
+    // Cleanup the webRTC streams and local state values
     stream.getTracks().forEach((track) => track.stop())
     videoContainer.current.srcObject = null
     setStream()
@@ -203,7 +208,8 @@ const ScreenShareDemo = () => {
   }
 
   useEffect(() => {
-    // In case the user ends the video in some other manner
+    // In case the user ends the video in some other manner. Note that
+    // the event listener that calls this function isn't all that robust
     const videoEnded = () => {
       videoContainer.current.srcObject = null
       setSharing(false)
@@ -230,7 +236,6 @@ const ScreenShareDemo = () => {
       }
     }
 
-    // Event listener for when the stream ends
     stream &&
       stream.getVideoTracks()[0].addEventListener("ended", () => {
         videoEnded()
@@ -241,7 +246,7 @@ const ScreenShareDemo = () => {
         videoEnded()
       })
     )
-  }, [stream, peerConnections, addSession, joinKey, isHost /*, numViewers*/])
+  }, [stream, peerConnections, addSession, joinKey, isHost])
 
   return (
     <div>
