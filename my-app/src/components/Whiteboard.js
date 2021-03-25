@@ -7,12 +7,32 @@ interface propType
 class Whiteboard extends React.Component<propType> {
   constructor(props: propType)
   {
-    super(props)
+    super(props);
+    this.state = {
+      image: null
+    };
+
+    this.onImageChange = this.onImageChange.bind(this);
   }
+
+  onImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      this.setState({
+        image: URL.createObjectURL(img)
+      });
+    }
+  };
+
   render() {
     return (
       <div>
-        Try Drawing!
+        <div class="file-select">
+          <img src = {this.state.image} />
+          <h3>Select image</h3>
+          <input type="file" name="myImage" onChange={this.onImageChange} />
+        </div>
+        <h1>Draw here!</h1>
         <SketchField
         tool={Tools.Pencil}
         lineColor='black'
