@@ -5,6 +5,9 @@ import firebase from "../firebaseInit"
 // Get a reference to the database service
 const database = firebase.database()
 
+// STUN servers are used to handle the complicated networking involved with
+// peer connections and are pretty essential to the webRTC screen sharing
+// feature that this component demonstrates
 const stunServers = {
   iceServers: [
     {
@@ -260,6 +263,10 @@ const ScreenShareDemo = () => {
         <div>
           <p>Room IDs</p>
           <div>
+            <p>Share the key below to let others join the screenshare room</p>
+            <p>
+              Note: Don't forget to copy over the "-" character in the beginning
+            </p>
             <p>{joinKey}</p>
           </div>
           <button onClick={stopSharing}>Stop sharing</button>
