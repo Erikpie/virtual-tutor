@@ -1,15 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
-import firebase from "firebase/app"
-import "firebase/database"
 
-// FIXME: Change out this API key and invalidate it so it can't be abused
-// Future versions should NOT have this hardcoded!
-var config = {
-  apiKey: "AIzaSyBLfvlNwNehgXM2jCzx75wADA5xRssDChs",
-  authDomain: "live-web-tutor.firebaseapp.com",
-  databaseURL: "https://live-web-tutor-default-rtdb.firebaseio.com/",
-}
-firebase.initializeApp(config)
+import firebase from "../firebaseInit"
 
 // Get a reference to the database service
 const database = firebase.database()
