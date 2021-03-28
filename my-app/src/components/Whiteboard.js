@@ -8,30 +8,25 @@ class Whiteboard extends React.Component<propType> {
   constructor(props: propType)
   {
     super(props);
-    this.state = {
-      image: null
-    };
-
-    this.onImageChange = this.onImageChange.bind(this);
     this.sketchRef = React.createRef();
-
+    this.onImageChange = this.onImageChange.bind(this);
   }
 
   onImageChange = event => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(img)
-      });
-      this.sketchRef.current.addImg(URL.createObjectURL(img));
+      let imgurl = URL.createObjectURL(img);
+      this.sketchRef.current.addImg(imgurl);
+      console.log(this.sketchRef.current);
+      console.log(this.sketchRef.current.toJSON());
+      console.log(imgurl);
     }
   };
 
   render() {
     return (
       <div>
-        <div class="file-select">
-          <img src = {this.state.image} />
+        <div className="file-select">
           <h3>Select image</h3>
           <input type="file" name="myImage" onChange={this.onImageChange} />
         </div>
