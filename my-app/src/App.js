@@ -2,9 +2,10 @@ import './App.css';
 import { useState } from 'react';
 import Navigation from './components/Navigation';
 import Search from './components/Search';
-import Whiteboard from './components/Whiteboard'
-import Home from './components/Home'
-import Login from './components/Login'
+import Whiteboard from './components/Whiteboard';
+import Home from './components/Home';
+import Login from './components/Login';
+import Join from './components/Join';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 //const WORKER_ROUTE = 'http://localhost:8787';
@@ -22,6 +23,7 @@ function App() {
           <Route path="/search" component={Search} />
           <Route path="/Whiteboard" component={Whiteboard} />
           <Route path="/login" component={Login} />
+          <Route path="/join" component={Join} />
 
           // home must come last
           <Route path="/" component={Home} />

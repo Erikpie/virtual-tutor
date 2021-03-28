@@ -5,6 +5,7 @@ let sketch_state = "BADDATA";
 
 let rooms = [];
 let tutors = [];
+let roomID = 0;
 
 server({ port: 8080 }, [
   get('/', ctx => sketch_state),

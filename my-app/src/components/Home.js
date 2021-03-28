@@ -13,7 +13,7 @@ function Home() {
 			<Col className="save">
 				<p className="saveDesc">
 					Live web tutoring to save your class grades.<br/>
-					<Button style={{'background-color': 'black', 'border-color': 'white'}}>Start learning</Button>
+					<Button style={{'background-color': 'black', 'border-color': 'white'}} href="/join">Start learning</Button>
 
 				</p>
 			</Col>
