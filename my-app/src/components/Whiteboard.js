@@ -14,6 +14,7 @@ class Whiteboard extends React.Component<propType> {
 
     this.onImageChange = this.onImageChange.bind(this);
     this.sketchRef = React.createRef();
+
   }
 
   onImageChange = event => {
