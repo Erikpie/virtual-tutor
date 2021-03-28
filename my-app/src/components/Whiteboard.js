@@ -23,12 +23,9 @@ class Whiteboard extends React.Component<propType> {
       this.setState({
         image: URL.createObjectURL(img)
       });
+      this.sketchRef.current.addImg(URL.createObjectURL(img));
     }
   };
-
-  onSketchChange = event => {
-  	console.log(this.sketchRef.current.toJSON());
-  }
 
   render() {
     return (
@@ -44,7 +41,6 @@ class Whiteboard extends React.Component<propType> {
         tool={Tools.Pencil}
         lineColor='black'
         lineWidth={3}
-        onChange={this.onSketchChange}
         />
       </div>
     );
