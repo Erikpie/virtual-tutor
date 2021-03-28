@@ -1,8 +1,18 @@
 const server = require('server');
-
 const {get, post} = server.router;
 
-// launcher server
+let sketch_state = "BADDATA";
+
+let rooms = [];
+let tutors = [];
+
 server({ port: 8080 }, [
-    get('/', ctx => 'Hello world!')
+  get('/', ctx => sketch_state),
+  post('/', ctx => {
+    console.log(ctx.data);
+    sketch_state = ctx.data;
+    return 'ok';
+  })
 ]);
+console.log("Server started on localhost:8080")
+
