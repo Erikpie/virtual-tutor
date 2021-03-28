@@ -13,6 +13,7 @@ class Whiteboard extends React.Component<propType> {
     };
 
     this.onImageChange = this.onImageChange.bind(this);
+    this.sketchRef = React.createRef();
   }
 
   onImageChange = event => {
@@ -24,6 +25,10 @@ class Whiteboard extends React.Component<propType> {
     }
   };
 
+  onSketchChange = event => {
+  	console.log(this.sketchRef.current.toJSON());
+  }
+
   render() {
     return (
       <div>
@@ -34,9 +39,11 @@ class Whiteboard extends React.Component<propType> {
         </div>
         <h1>Draw here!</h1>
         <SketchField
+        ref={this.sketchRef}
         tool={Tools.Pencil}
         lineColor='black'
         lineWidth={3}
+        onChange={this.onSketchChange}
         />
       </div>
     );
