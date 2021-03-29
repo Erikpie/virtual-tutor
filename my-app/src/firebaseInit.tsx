@@ -1,12 +1,12 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/analytics';
+
 import {
   FirebaseDatabaseProvider,
   FirebaseDatabaseNode,
   FirebaseDatabaseMutation
 } from "@react-firebase/database";
-
 // Configure Firebase
 // Pretty sure this is ill-advised but I don't really know where else to put these right now
 export const firebaseConfig = {
