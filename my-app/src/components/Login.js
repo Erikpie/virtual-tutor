@@ -30,15 +30,8 @@ function Login()
   const [profile, setProfile] = useState("");
   
   return (
-    <Router>
-      <div className="App">
-        <Navigation />
+  		<div>
         <AuthHandler onChange={setUser} />
-        <Switch>
-          <Route path="/search" component={Search} />
-        </Switch>
-        <br/>
-        <hr />
         <div className="container-fluid">
           <div className="form-group">
           <label htmlFor="user_id">User ID</label>
@@ -46,8 +39,7 @@ function Login()
           </div>
           {profile ? <Profile user_id={profile} /> : ""}
         </div>
-      </div>
-    </Router>
+        </div>
   );
 }
 export default Login;
