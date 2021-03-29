@@ -5,6 +5,7 @@ import Search from './components/Search';
 import Whiteboard from './components/Whiteboard'
 import Home from './components/Home'
 import Login from './components/Login'
+import Chatroom from './components/Chatroom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 //const WORKER_ROUTE = 'http://localhost:8787';
@@ -22,7 +23,7 @@ function App() {
           <Route path="/search" component={Search} />
           <Route path="/Whiteboard" component={Whiteboard} />
           <Route path="/login" component={Login} />
-
+          <Route path="/Chat" component={Chatroom} />
           // home must come last
           <Route path="/" component={Home} />
         </Switch>
