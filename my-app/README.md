@@ -10,7 +10,7 @@ to grab the project's dependencies.
 
 If necessary, run
 
-###`npm audit fix`
+### `npm audit fix`
 To fix additional dependancy issues. 
 
 ## Available Scripts
