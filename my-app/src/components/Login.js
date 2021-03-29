@@ -1,12 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import Navigation from './components/Navigation';
-import Search from './components/Search';
+import Navigation from './Navigation';
+import Search from './Search';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import firebase from 'firebase/app';
-import AuthHandler from './auth';
-import Profile from './profile';
-import EditProfile from './edit';
+import AuthHandler from '../auth';
+import Profile from '../profile';
 /*
 function Login() {
     return(
@@ -27,7 +26,7 @@ function Login() {
 // temp function until we figure out the above
 function Login()
 {	
-  const [user, setUser] = useState<firebase.User>();
+  const [user, setUser] = useState();
   const [profile, setProfile] = useState("");
   
   return (
@@ -39,9 +38,6 @@ function Login()
           <Route path="/search" component={Search} />
         </Switch>
         <br/>
-        <div className="container-fluid">
-        {user ? <EditProfile user={user} /> : ""}
-        </div>
         <hr />
         <div className="container-fluid">
           <div className="form-group">
