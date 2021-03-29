@@ -8,6 +8,11 @@ If this is the first time running you need to do
 ### `npm install`
 to grab the project's dependencies.
 
+If necessary, run
+
+### `npm audit fix`
+To fix additional dependancy issues. 
+
 ## Available Scripts
 
 In the project directory, you can run:
