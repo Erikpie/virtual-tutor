@@ -1,5 +1,6 @@
 import React from 'react'
 import {Checkbox} from '@material-ui/core'
+import { Redirect } from 'react-router-dom';
 
 class Join extends React.Component {
 	constructor(props) {
@@ -7,7 +8,8 @@ class Join extends React.Component {
 		this.state = {
 		name: "",
 		subject: "",
-		isTutor: false
+		isTutor: false,
+		roomReady: -1
 		}
 
 		this.handleNameChange = this.handleNameChange.bind(this);
@@ -30,17 +32,25 @@ class Join extends React.Component {
 
 	requestNewRoom = () => {
 		const reqBody = {
-		name: this.name,
-		subject: this.subject,
-		isTutor: this.isTutor
-			
+		type: "make",
+		name: this.state.name,
+		subject: this.state.subject,
+		isTutor: this.state.isTutor
 		};
 		const requestOptions = {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json' },
-			body: JSON.stringify(this.state)	
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(reqBody)	
 		};
-		alert("Alerting server");
+		//fetch('localhost:8080/make', requestOptions)
+		//.then(response => response.json())
+		//.then(data => GoToRoom(data.id));
+		// changing room
+		let newState = this.state
+		newState.roomReady = 32;
+		// TODO get roomReady ID from server
+		this.setState(newState);
+		alert("Alerted server of " + requestOptions.body);
 	}
 
 	handleSubmit(event) {
@@ -48,15 +58,10 @@ class Join extends React.Component {
 			alert("Name and subject must contain data");
 		}
 		else {
-			alert(this.state.name + " wants learn about " + this.state.subject + this.state.isTutor);
+			//alert(this.state.name + " wants learn about " + this.state.subject + this.state.isTutor);
 			this.requestNewRoom();
 		}
 		event.preventDefault();
-	}
-
-	goToRoom = (roomID) =>
-	{
-		
 	}
 
 	handleCheckChange(event) {
@@ -66,6 +71,10 @@ class Join extends React.Component {
 	}
 
 	render() {
+		if (this.state.roomReady >= 0)
+		{
+			return <Redirect to={{pathname: '/room', state: { id: this.state.roomReady }}}/>
+		}
 		return (
 		<div>
 			Create a room:
