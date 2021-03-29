@@ -1,4 +1,35 @@
 import React from 'react';
+
+class Chatbox extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			text: "fasdf"
+		}
+	}
+
+	addText(newText) {
+		this.setState({text: this.state.text + newText + '\n'});
+	}
+
+	render()
+	{
+		return(
+		<label>
+		{this.state.text}
+		</label>	
+		);
+	}
+}
+
+class Chatinput extends React.Component {
+	
+}
+
+class Chat extends React.Component {
+	
+}
+
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
@@ -11,7 +42,7 @@ class Room extends React.Component {
 	{
 		return(
 			<div>
-			{this.state.id}
+			Room ID: {this.state.id}
 			</div>
 		);
 	}
