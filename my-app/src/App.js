@@ -6,6 +6,7 @@ import Whiteboard from './components/Whiteboard';
 import Home from './components/Home';
 import Login from './components/Login';
 import Join from './components/Join';
+import Room from './components/Room';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 //const WORKER_ROUTE = 'http://localhost:8787';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Whiteboard" component={Whiteboard} />
           <Route path="/login" component={Login} />
           <Route path="/join" component={Join} />
+          <Route path="/room" component={Room} />
 
           // home must come last
           <Route path="/" component={Home} />
