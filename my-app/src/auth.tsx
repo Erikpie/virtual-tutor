@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { writeUserData, setUserAdmin, setUserTutor} from './database';
+import { writeUserData } from './database';
 import { useEffect, useState } from 'react';
 import { auth, provider } from './firebaseInit';
 import { Navbar, Nav, Button } from 'react-bootstrap';

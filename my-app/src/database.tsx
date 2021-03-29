@@ -31,3 +31,5 @@ export function setUserAdmin(userID: string, admin: boolean){
 export function setUserTutor(userID: string, tutor: boolean){
   user_storage.ref('users/' + userID).update({tutor_access: tutor});
 }
+
+export default app
