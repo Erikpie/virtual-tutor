@@ -1,22 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pacifico');
 
-body {
+/* .chatroom body {
   margin: 0;
-}
+}  */
 
-p {
+/* p {
   margin: 0;
   display: inline-block;
-}
-
-.App {
-  /* background-color: #1EE494; */
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+} */
 
 .chatroom {
   width: 360px;
@@ -24,6 +15,7 @@ p {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 0 8px 0 rgba(0,0,0, 0.3);
+  margin: auto;
 }
 
 /* .chatroom h3 {
@@ -62,14 +54,14 @@ p {
   max-width: 200px;
 }
 
-.chatroom .chats .chat img {
+/* .chatroom .chats .chat img {
   width: 20px;
   height: 20px;
   border-radius: 50%;
   position: absolute;
   top: -10px;
   left: 0px;
-}
+} */
 
 .chatroom .chats .chat.right {
   float: right;
