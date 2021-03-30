@@ -17,6 +17,7 @@ var user_storage = firebase.database();
 export function writeUserData(userId: string, name: string, email: string, tutor: Boolean, admin: Boolean){
   user_storage.ref('users/' + userId).set({
     username: name,
+    display_name: name,
     email: email,
     tutor_access: tutor,
     admin_access: admin,
@@ -31,3 +32,5 @@ export function setUserAdmin(userID: string, admin: boolean){
 export function setUserTutor(userID: string, tutor: boolean){
   user_storage.ref('users/' + userID).update({tutor_access: tutor});
 }
+
+export default app
