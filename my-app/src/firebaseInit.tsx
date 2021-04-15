@@ -1,31 +1,28 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/analytics';
-
-import {
-  FirebaseDatabaseProvider,
-  FirebaseDatabaseNode,
-  FirebaseDatabaseMutation
-} from "@react-firebase/database";
+import firebase from "firebase/app"
+import "firebase/auth"
+import "firebase/analytics"
+import "firebase/database"
 // Configure Firebase
-// Pretty sure this is ill-advised but I don't really know where else to put these right now
+// TODO: FIXME: This config should be stored in an env file once the mvp
+// is complete. Otherwise this is a security concern and will lead to the abuse
+// of API keys
 export const firebaseConfig = {
   apiKey: "AIzaSyBLfvlNwNehgXM2jCzx75wADA5xRssDChs",
   authDomain: "live-web-tutor.firebaseapp.com",
+  databaseURL: "https://live-web-tutor-default-rtdb.firebaseio.com",
   projectId: "live-web-tutor",
   storageBucket: "live-web-tutor.appspot.com",
   messagingSenderId: "332165633586",
-  databaseURL: "live-web-tutor-default-rtdb.firebaseio.com",
-  appId: "1:1082477495907:web:a85d8ff36c2163a7abda56",
-  measurementId: "G-KG3Y18ELCQ"
-};
+  appId: "1:332165633586:web:25de3e35ffe8cff5ee0e2b",
+  measurementId: "G-0Q6B99NS1Z",
+}
 
 // Firebase app was getting initialized twice before, no idea why, just added this to fix it. Should get rid of this later
-let app: firebase.app.App;
+let app: firebase.app.App
 if (!firebase.apps.length) {
-    app = firebase.initializeApp(firebaseConfig);
+  app = firebase.initializeApp(firebaseConfig)
 } else {
-    app = firebase.app(); // if already initialized, use that one
+  app = firebase.app() // if already initialized, use that one
 }
 
 export const auth = app.auth();

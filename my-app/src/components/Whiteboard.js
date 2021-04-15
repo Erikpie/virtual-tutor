@@ -1,5 +1,5 @@
 import React from 'react';
-import {SketchField, Tools} from 'react-sketch'
+import {SketchField, Tools} from 'react-sketch2'
 interface propType
 {
 }

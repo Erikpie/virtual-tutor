@@ -54,7 +54,7 @@ class Join extends React.Component {
 	}
 
 	handleSubmit(event) {
-		if (this.state.name == "" || this.state.subject == "") {
+		if (this.state.name === "" || this.state.subject === "") {
 			alert("Name and subject must contain data");
 		}
 		else {

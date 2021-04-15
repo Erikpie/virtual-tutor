@@ -1,14 +1,13 @@
 import React from 'react';
 import {Container, Row, Col, Button} from 'react-bootstrap';
-import { List, Divider } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import './Home.css'
 function Home() {
-	let available_tutors = [];
     return(
     	<Container className="quadBox">
     		<Row>
 			<Col className="quadrant">
-				<img className="apple" src={"/img/apple.jpg"}/>
+				<img className="apple" alt="Apple" src={"/img/apple.jpg"}/>
 			</Col>
 			<Col className="save">
 				<p className="saveDesc">
