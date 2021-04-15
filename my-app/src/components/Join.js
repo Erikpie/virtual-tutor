@@ -1,6 +1,9 @@
-import React from 'react'
-import {Checkbox} from '@material-ui/core'
+import React from 'react';
+import {Checkbox} from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
+
+import { createRoom } from '../database.tsx';
+
 
 class Join extends React.Component {
 	constructor(props) {
@@ -79,7 +82,7 @@ class Join extends React.Component {
 	}
 
 	handleJoin(event) {
-		alert("Joining");
+		alert("Joining " + this.state.IDinput + " and Recieved " + createRoom());
 	}
 
 	render() {

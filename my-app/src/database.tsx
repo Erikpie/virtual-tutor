@@ -32,4 +32,17 @@ export function setUserTutor(userID: string, tutor: boolean){
   user_storage.ref('users/' + userID).update({tutor_access: tutor});
 }
 
+export function createRoom(): number {
+	// return value
+	let x: number = -1;
+	user_storage.ref('rooms/lastID').on("value", function(snapshot) {
+	  console.log(snapshot.val());
+	  x = snapshot.val();
+	}, function (errorObject) {
+	  console.log("The read failed: " + errorObject.code);
+	});
+	user_storage.ref('rooms').update({lastID: x + 1});
+	return x;
+}
+
 export default app
