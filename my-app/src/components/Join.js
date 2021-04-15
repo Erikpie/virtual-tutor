@@ -9,13 +9,21 @@ class Join extends React.Component {
 		name: "",
 		subject: "",
 		isTutor: false,
-		roomReady: -1
+		roomReady: -1,
+		IDinput: ""
 		}
 
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handleSubjectChange = this.handleSubjectChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleCreate = this.handleCreate.bind(this);
 		this.handleCheckChange = this.handleCheckChange.bind(this);
+		this.handleIDChange = this.handleIDChange.bind(this);
+		this.handleJoin = this.handleJoin.bind(this);
+	}
+
+	handleIDChange(event)
+	{
+		this.setState({IDinput: event.target.value});
 	}
 
 	handleNameChange(event) {
@@ -53,7 +61,7 @@ class Join extends React.Component {
 		alert("Alerted server of " + requestOptions.body);
 	}
 
-	handleSubmit(event) {
+	handleCreate(event) {
 		if (this.state.name === "" || this.state.subject === "") {
 			alert("Name and subject must contain data");
 		}
@@ -68,6 +76,10 @@ class Join extends React.Component {
 		let newState = this.state;
 		newState.isTutor = !newState.isTutor;
 		this.setState(newState);
+	}
+
+	handleJoin(event) {
+		alert("Joining");
 	}
 
 	render() {
@@ -89,10 +101,15 @@ class Join extends React.Component {
 			<input type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
 			</label>
 			<br/>
-			<input type="submit" value="Submit"/>
+			<input type="submit" value="Create" onClick={this.handleCreate} />
 			</form>	
 			As a tutor?<Checkbox checked={this.state.isTutor} onChange={this.handleCheckChange} inputProps={{ 'aria-label': 'primary checkbox' }}/>
-			</div>
+			<br/>
+			Join a room. Enter ID: 
+			<input type="text" value={this.state.IDinput} onChange={this.handleIDChange} />
+			<br/>
+			<input type="submit" value="Join" onClick={this.handleJoin}/>
+		</div>
 		);
 	}
 }
