@@ -44,7 +44,6 @@ class Room extends React.Component {
 		return(
 			<div>
 			Room ID: {this.state.id}
-			{this.state.id}
 			</div>
 		);
 	}

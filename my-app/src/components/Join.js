@@ -82,7 +82,8 @@ class Join extends React.Component {
 	}
 
 	handleJoin(event) {
-		alert("Joining " + this.state.IDinput + " and Recieved " + createRoom());
+		alert("Joining " + this.state.IDinput);
+		createRoom(this);
 	}
 
 	render() {
