@@ -35,8 +35,25 @@ export function setUserTutor(userID: string, tutor: boolean){
 export function createRoom(join_component): void {
 	user_storage.ref('/rooms').once('value').then((snapshot) => {
 	  var x = snapshot.val().lastID;
+	  // book this room by updating last known id
+	  // (This creates a race condition where two unrelated students
+	  // can book the same room if they click the button at the same time...
+	  // We got to think about how to fix that)
 	  user_storage.ref().update({'rooms/lastID': x + 1});
+
+	  // create the room with such an id
+	  user_storage.ref('/')
+	  
 	  join_component.setState({roomReady: x});
 });
 }
+
+export function getUpdate(room_component): void {
+	
+}
+
+export function initRoom(room_component): void {
+	
+}
+
 export default app

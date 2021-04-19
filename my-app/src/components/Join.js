@@ -30,38 +30,11 @@ class Join extends React.Component {
 	}
 
 	handleNameChange(event) {
-		let newState = this.state;
-		newState.name = event.target.value;
-		this.setState(newState);
+		this.setState({name: event.target.value});
 	}
 
 	handleSubjectChange(event) {
-		let newState = this.state;
-		newState.subject = event.target.value;
-		this.setState(newState);
-	}
-
-	requestNewRoom = () => {
-		const reqBody = {
-		type: "make",
-		name: this.state.name,
-		subject: this.state.subject,
-		isTutor: this.state.isTutor
-		};
-		const requestOptions = {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify(reqBody)	
-		};
-		//fetch('localhost:8080/make', requestOptions)
-		//.then(response => response.json())
-		//.then(data => GoToRoom(data.id));
-		// changing room
-		let newState = this.state
-		newState.roomReady = 32;
-		// TODO get roomReady ID from server
-		this.setState(newState);
-		alert("Alerted server of " + requestOptions.body);
+		this.setState({subject: event.target.value});
 	}
 
 	handleCreate(event) {
@@ -70,7 +43,7 @@ class Join extends React.Component {
 		}
 		else {
 			//alert(this.state.name + " wants learn about " + this.state.subject + this.state.isTutor);
-			this.requestNewRoom();
+			createRoom(this);
 		}
 		event.preventDefault();
 	}
@@ -82,14 +55,18 @@ class Join extends React.Component {
 	}
 
 	handleJoin(event) {
-		alert("Joining " + this.state.IDinput);
-		createRoom(this);
+		// skips check if room actually exists
+		this.setState({roomReady: parseInt(this.state.IDinput)});
 	}
 
 	render() {
 		if (this.state.roomReady >= 0)
 		{
-			return <Redirect to={{pathname: '/room', state: { id: this.state.roomReady }}}/>
+			return <Redirect to={{pathname: '/room', state: { id: this.state.roomReady,
+			subject: this.state.subject,
+			isTutor: this.state.isTutor,
+			name: this.state.name,
+			messages: "" }}}/>
 		}
 		return (
 		<div>

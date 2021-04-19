@@ -1,42 +1,20 @@
 import React from 'react';
-
-// Commenting this out until these components get used
-// class Chatbox extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {
-// 			text: "fasdf"
-// 		}
-// 	}
-
-// 	addText(newText) {
-// 		this.setState({text: this.state.text + newText + '\n'});
-// 	}
-
-// 	render()
-// 	{
-// 		return(
-// 		<label>
-// 		{this.state.text}
-// 		</label>	
-// 		);
-// 	}
-// }
-
-// class Chatinput extends React.Component {
-	
-// }
-
-// class Chat extends React.Component {
-	
-// }
+import {ChatBox} from 'react-chatbox-component';
+import {getUpdate, initRoom} from '../database.tsx';
 
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			id: this.props.location.state.id
-		}
+		// id, subject, isTutor, name messages
+		this.state = this.props.location.state;
+		this.update = this.update.bind(this);
+
+		initRoom(this);
+	}
+
+	update()
+	{
+		getUpdate(this); // from database.tsx
 	}
 
 	render()
@@ -44,6 +22,8 @@ class Room extends React.Component {
 		return(
 			<div>
 			Room ID: {this.state.id}
+			<br/>
+			Subject: {this.state.subject}
 			</div>
 		);
 	}
