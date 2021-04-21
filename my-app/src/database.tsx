@@ -33,12 +33,12 @@ export function setUserTutor(userID: string, tutor: boolean){
 }
 
 export function createRoom(join_component): void {
-	user_storage.ref('/rooms').once('value').then((snapshot) => {
-	  var x = snapshot.val().lastID;
+	user_storage.ref('rooms').once('value').then((snapshot) => {
+	  let x = snapshot.val().lastID;
 	  // book this room by updating last known id
 	  // (This creates a race condition where two unrelated students
 	  // can book the same room if they click the button at the same time...
-	  // We got to think about how to fix that)
+	  // We got to think about how to fix that with mutex)
 	  user_storage.ref().update({'rooms/lastID': x + 1});
 
 	  // create the room with such an id
@@ -49,11 +49,36 @@ export function createRoom(join_component): void {
 }
 
 export function getUpdate(room_component): void {
-	
+	user_storage.ref('rooms/' + room_component.state.id).once('value').then((snapshot) => 
+	{
+		let newVal = snapshot.val();
+		console.log("Server Result" + JSON.stringify(newVal));
+		room_component._isMounted = true;
+		newVal.messages = newVal.messages.messages;
+		console.log(newVal);
+		room_component.setState(newVal); // update to current values
+		room_component._isMounted = false;
+	});
 }
 
 export function initRoom(room_component): void {
-	
+	let x = JSON.parse(JSON.stringify(room_component)); // deep copy. Got a better way?
+	delete x.state.name;
+	delete x.state.isTutor;
+	delete x.state.id;
+	delete x.state.messageVal;
+	let jsonData: string = JSON.stringify(x.state);
+	console.log(jsonData);
+	console.log(JSON.stringify(room_component.state));
+	// create room in firebase
+	user_storage.ref('rooms/' + room_component.state.id).set(x.state);
+}
+
+export function sendMessage(room_component, message): void
+{
+	user_storage.ref('rooms/' + room_component.state.id + '/messages').update({
+		messages: message
+	});
 }
 
 export default app
