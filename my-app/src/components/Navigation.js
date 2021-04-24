@@ -5,7 +5,7 @@ import { Navbar, Form, FormControl, Nav } from "react-bootstrap"
 function Navigation() {
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">Virtual Tutor</Navbar.Brand>
+      <Navbar.Brand href="/">Virtual Tutor</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
