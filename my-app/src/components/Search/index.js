@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 import "./styles.css"
 
 import firebase from "../../firebaseInit"
@@ -7,6 +8,20 @@ const database = firebase.database()
 
 function Search() {
   const [rooms, setRooms] = useState(null)
+  const history = useHistory()
+
+  // Clicking on a room will redirect the user to the
+  // room. Uses react-router to pass state into the Room component
+  const joinRoom = (roomID, subject) => {
+    const newRoomState = {
+      id: roomID,
+      subject: subject,
+      isTutor: false,
+      name: "newUser",
+      messages: "",
+    }
+    history.push("/room", newRoomState)
+  }
 
   useEffect(() => {
     // This function should only be called once on render, hence the useEffect
@@ -38,16 +53,18 @@ function Search() {
         {rooms ? (
           <>
             {Object.entries(rooms).map((roomEntry, index) => {
+              const roomID = roomEntry[0]
+              const roomSubject = roomEntry[1].subject
               // Prevents the lastID property of Firebase from showing up
               // as a room
               if (index === Object.entries(rooms).length - 1) return null
               return (
                 <div
                   className="Search__room-card"
-                  key={roomEntry[0]}
-                  onClick={() => console.log(roomEntry[0])}
+                  key={roomID}
+                  onClick={() => joinRoom(roomID, roomSubject)}
                 >
-                  <h2>{roomEntry[1].subject || "No subject"}</h2>
+                  <h2>{roomSubject || "No subject"}</h2>
                 </div>
               )
             })}
