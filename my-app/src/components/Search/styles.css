@@ -1,0 +1,42 @@
+.Search__header {
+  padding: 2rem 4rem;
+  background: #000;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Search__header > h1,
+.Search__header > p {
+  max-width: 600px;
+}
+
+.Search__header > p {
+  margin-bottom: 0;
+}
+
+.Search__room-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.Search__room-card {
+  margin: 2rem;
+  padding: 2rem;
+  background: #f1f1f1;
+  border-radius: 2px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.Search__room-card:hover {
+  background: #f8ffca;
+  cursor: pointer;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.2);
+}
