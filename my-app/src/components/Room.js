@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {getUpdate, initRoom, sendMessage} from '../database.tsx';
+import ScreenShareDemo from "../components/ScreenShareDemo"
 
 class Room extends React.Component {
 	constructor(props) {
@@ -34,17 +36,20 @@ class Room extends React.Component {
 	render()
 	{
 		return(
-			<div>
-			Room ID: {this.state.id}
-			<br/>
-			Subject: {this.state.subject}
-			<br/>
-			<input type="text" value={this.state.messageVal} onChange={this.handleMessageChange} />
-			<input type="submit" value="Send!" onClick={this.handleMessageClick} />
-			<br/>
-			Messages:
-			<br/>
-			{this.state.messages}
+			<div style={{display: "flex"}}>
+				<div>
+				Room ID: {this.state.id}
+				<br/>
+				Subject: {this.state.subject}
+				<br/>
+				<input type="text" value={this.state.messageVal} onChange={this.handleMessageChange} />
+				<input type="submit" value="Send!" onClick={this.handleMessageClick} />
+				<br/>
+				Messages:
+				<br/>
+				{this.state.messages}
+				</div>
+				<ScreenShareDemo chatRoomID={this.state.id} />
 			</div>
 		);
 	}

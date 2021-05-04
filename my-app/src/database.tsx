@@ -82,7 +82,8 @@ export function initRoom(room_component): void {
   console.log(jsonData)
   console.log(JSON.stringify(room_component.state))
   // create room in firebase
-  user_storage.ref("rooms/" + room_component.state.id).set(x.state)
+  // Use update() instead of set() because set() overrides and erases data
+  user_storage.ref("rooms/" + room_component.state.id).update(x.state)
 }
 
 export function sendMessage(room_component, message): void {

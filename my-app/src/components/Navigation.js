@@ -12,7 +12,6 @@ function Navigation() {
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/search">Search</Nav.Link>
           <Nav.Link href="/Whiteboard">Whiteboard</Nav.Link>
-          <Nav.Link href="/screen">Screenshare</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/join">Join/Make a room</Nav.Link>
         </Nav>
