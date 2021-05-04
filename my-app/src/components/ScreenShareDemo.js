@@ -23,39 +23,32 @@ const stunServers = {
  * https://firebase.google.com/docs/database/web/structure-data
  * https://webrtc.org/getting-started/peer-connections
  *
- * TODO: Integrate demo into actual product once room functionality is finished
  * TODO: Set a timer for DB to clear room data if the host terminates unexpectedly
  *       This will require a backend or cloud function to achieve
  * TODO: Do some memory cleanup for the host when a peer leaves the
  *       call/disconnects. This is very difficult to do if we stick with
  *       a client only approach to webRTC signaling
  */
-const ScreenShareDemo = () => {
+const ScreenShareDemo = ({ chatRoomID }) => {
   const [sharing, setSharing] = useState(false)
   const [isHost, setIsHost] = useState(false)
   const [numViewers, setNumViewers] = useState(0)
   const [peerConnections, setPeerConnections] = useState({})
-  const [roomID, setRoomID] = useState("")
-  const [joinKey, setJoinKey] = useState("")
   const [stream, setStream] = useState()
   const videoContainer = useRef(null)
 
   // Starts broadcasting and creates an offer for audience to join
   const startSharing = async () => {
     // Create new room in DB if it doesn't exist
-    const roomDoc = roomID
-      ? database.ref("rooms").child(roomID)
-      : database.ref("rooms").push()
-    const roomDocKey = roomID ? roomID : (await roomDoc).key
     const localStream = stream
       ? stream
       : await navigator.mediaDevices.getDisplayMedia({ video: true })
 
     // Add your first session
-    await addSession(roomDocKey, localStream)
+    await addSession(localStream)
 
     // Finally update state if all is sucessful
-    setJoinKey(roomDocKey)
+    // setJoinKey(roomDocKey)
     setStream(localStream)
     setSharing(true)
     setIsHost(true)
@@ -65,16 +58,17 @@ const ScreenShareDemo = () => {
   // to the signaling database in order to generate a peer connection session
   // that'll let a user join and see the host's screen
   const addSession = useCallback(
-    async (roomID, localStream) => {
+    async (localStream) => {
       // Create a new webRTC signaling session in DB
-      const screenSessionDoc = database.ref("rooms").child(roomID).push()
+      const screenSessionDoc = database
+        .ref(`rooms/${chatRoomID}/screenshare`)
+        .push()
       const screenSessionDocKey = (await screenSessionDoc).key
       const offerCandidates = screenSessionDoc.child("offerCandidates")
 
       // Save the key of the session so that a client can find and join it
       await database
-        .ref("rooms")
-        .child(roomID)
+        .ref(`rooms/${chatRoomID}/screenshare`)
         .update({ availableSessionID: screenSessionDocKey })
 
       // Initialize a peer connection and add it to existing peer connections
@@ -124,7 +118,7 @@ const ScreenShareDemo = () => {
         }
       }
     },
-    [peerConnections, numViewers]
+    [peerConnections, numViewers, chatRoomID]
   )
 
   // Used to join a user who's already broadcasting. It essentially
@@ -143,9 +137,10 @@ const ScreenShareDemo = () => {
     }
 
     // Get room information
-    const roomDoc = database.ref("rooms").child(roomID)
+    const roomDoc = database.ref(`rooms/${chatRoomID}`).child("screenshare")
     if (!roomDoc) {
-      throw Error("RoomID not found!")
+      alert("RoomID not found!")
+      return
     }
     // Grab signaling info for the joining room by finding the last
     // webRTC session
@@ -153,10 +148,9 @@ const ScreenShareDemo = () => {
     const availableSessionID = await availableSessionDoc.val()
 
     console.log(availableSessionID)
-    // TODO: Should be a soft error displayed to the user rather than an
-    // exception to be thrown
     if (!availableSessionID || availableSessionID === "") {
-      throw Error("Room might be fully occupied, try again later")
+      alert("Room might be fully occupied, try again or try a new room")
+      return
     }
 
     const screenSessionDoc = roomDoc.child(availableSessionID)
@@ -188,7 +182,11 @@ const ScreenShareDemo = () => {
     })
 
     // Remove the availableSessionID on the database
-    database.ref("rooms").child(roomID).child("availableSessionID").remove()
+    database
+      .ref(`rooms/${chatRoomID}`)
+      .child("screenshare")
+      .child("availableSessionID")
+      .remove()
 
     // Update local state to show stream
     setStream(remoteStream)
@@ -201,7 +199,7 @@ const ScreenShareDemo = () => {
     if (isHost) {
       // Remove signaling info from database for all peers since the
       // screen sharing session is over
-      database.ref("rooms").child(joinKey).remove()
+      database.ref(`rooms/${chatRoomID}`).child("screenshare").remove()
     }
     // Cleanup the webRTC streams and local state values
     stream.getTracks().forEach((track) => track.stop())
@@ -234,8 +232,8 @@ const ScreenShareDemo = () => {
         }
       }
 
-      if (joinKey !== "" && occupied) {
-        addSession(joinKey, stream)
+      if (occupied) {
+        // addSession(stream)
       }
     }
 
@@ -249,40 +247,27 @@ const ScreenShareDemo = () => {
         videoEnded()
       })
     )
-  }, [stream, peerConnections, addSession, joinKey, isHost])
+  }, [stream, peerConnections, addSession, isHost])
 
   return (
     <div>
+      {sharing ? (
+        <div>
+          <p>You are currently in a screenshare session</p>
+          <button onClick={stopSharing}>Stop</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={startSharing}>Start screen sharing</button>
+          <button onClick={joinSharing}>Join a screen sharing session</button>
+        </div>
+      )}
       <video
         ref={videoContainer}
         style={{ height: "256px" }}
         autoPlay
         playsInline
       />
-      {sharing ? (
-        <div>
-          <p>Room IDs</p>
-          <div>
-            <p>Share the key below to let others join the screenshare room</p>
-            <p>
-              Note: Don't forget to copy over the "-" character in the beginning
-            </p>
-            <p>{joinKey}</p>
-          </div>
-          <button onClick={stopSharing}>Stop sharing</button>
-        </div>
-      ) : (
-        <div>
-          <button onClick={startSharing}>Create room (screen sharing)</button>
-          <input
-            type="text"
-            value={roomID}
-            onChange={(e) => setRoomID(e.target.value)}
-            placeholder="Room ID"
-          />
-          <button onClick={joinSharing}>Join a room</button>
-        </div>
-      )}
     </div>
   )
 }
