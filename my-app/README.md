@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## First Time Running
 If this is the first time running you need to do
 
-### `npm install`
+### `npm install --legacy-peer-deps`
 to grab the project's dependencies.
 
 If necessary, run

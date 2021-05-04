@@ -1,50 +1,50 @@
 import React from 'react';
-
-// Commenting this out until these components get used
-// class Chatbox extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {
-// 			text: "fasdf"
-// 		}
-// 	}
-
-// 	addText(newText) {
-// 		this.setState({text: this.state.text + newText + '\n'});
-// 	}
-
-// 	render()
-// 	{
-// 		return(
-// 		<label>
-// 		{this.state.text}
-// 		</label>	
-// 		);
-// 	}
-// }
-
-// class Chatinput extends React.Component {
-	
-// }
-
-// class Chat extends React.Component {
-	
-// }
+import {getUpdate, initRoom, sendMessage} from '../database.tsx';
 
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			id: this.props.location.state.id
-		}
-	}
+		// id, subject, isTutor, name, messages
+		this.state = this.props.location.state;
+		this.setState({messageVal: ""});
+		
+		this.handleMessageClick = this.handleMessageClick.bind(this);
+		this.handleMessageChange = this.handleMessageChange.bind(this);
 
+		initRoom(this); // start sending data
+
+		setInterval(() => {
+			getUpdate(this);
+		}, 1000); // every second get update */
+	}
+	
+	handleMessageChange(event) {
+		this.setState({messageVal: event.target.value});
+	}
+	
+
+	handleMessageClick(event) {
+		this.setState({
+			messageVal: ""
+		});
+		let message = this.state.messages + this.state.name + ": " + this.state.messageVal + "\n";
+		sendMessage(this, message);
+	}
+	
 	render()
 	{
 		return(
 			<div>
 			Room ID: {this.state.id}
-			{this.state.id}
+			<br/>
+			Subject: {this.state.subject}
+			<br/>
+			<input type="text" value={this.state.messageVal} onChange={this.handleMessageChange} />
+			<input type="submit" value="Send!" onClick={this.handleMessageClick} />
+			<br/>
+			Messages:
+			<br/>
+			{this.state.messages}
 			</div>
 		);
 	}
