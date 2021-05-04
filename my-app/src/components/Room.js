@@ -13,7 +13,7 @@ class Room extends React.Component {
 
 		initRoom(this); // start sending data
 
-		var updateInterval = setInterval(() => {
+		setInterval(() => {
 			getUpdate(this);
 		}, 1000); // every second get update */
 	}
