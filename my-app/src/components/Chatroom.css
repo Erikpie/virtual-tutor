@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Pacifico');
+
+.chatroom {
+  width: 360px;
+  background-color: beige;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 8px 0 rgba(0,0,0, 0.3);
+  height: 90%;
+  right: 2%;
+  top: 8%;
+  position: absolute;
+}
+
+.chatroom .username {
+  font-weight: bold;
+}
+.chatroom .chats {
+  box-sizing: border-box;
+  padding: 0 20px; 
+  margin: 0 0 0;
+  height: 95%;
+  overflow-y: scroll;
+}
+
+.chatroom .chats .chat {
+  background: rgba(255, 255, 255, 0.8);
+  position: relative;
+  padding: 5px 13px;
+  font-size: 14px;
+  border-radius: 10px;
+  list-style: none;
+  float: left;
+  clear: both;
+  margin: 10px 0;
+  max-width: 200px;
+}
+
+.chatroom .chats .chat.right {
+  float: right;
+  clear: both;
+}
+
+.chatroom .chats .chat a {
+  text-decoration: none;
+  color:#3498DB;
+}
+
+.chatroom .input {
+  height: 40px;
+  width: 100%;
+  /* background: rgba(30, 228, 148, 0.7); */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input[type="text"] {
+  background: rgba(255, 255, 255, 0.8);
+  outline: 0;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 0 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 10px;
+  height: 30px;
+  width: 270px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+input[type="submit"] {
+  background: transparent;
+  /* border: 1px solid #1EE494; */
+  height: 30px;
+  width: 70px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chatroom .input input[type="submit"]:hover {
+  /* background: #1EE494; */
+  color: #FFF;
+}
