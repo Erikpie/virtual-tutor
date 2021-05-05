@@ -4,7 +4,6 @@ import Search from "./components/Search"
 import Whiteboard from "./components/Whiteboard"
 import ScreenShareDemo from "./components/ScreenShareDemo"
 import Home from "./components/Home"
-import Login from "./components/Login"
 import Join from "./components/Join"
 import Room from "./components/Room"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
@@ -21,7 +20,6 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/search" component={Search} />
           <Route path="/Whiteboard" component={Whiteboard} />
-          <Route path="/login" component={Login} />
           <Route path="/screen" component={ScreenShareDemo} />
           <Route path="/join" component={Join} />
           <Route path="/room" component={Room} />
