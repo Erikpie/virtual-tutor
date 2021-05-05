@@ -15,7 +15,7 @@ class Room extends React.Component {
 		return(
 			<div style={{display: "flex"}}>
 				<div>
-				Subject: {this.state.subject}
+				<h3>Subject: {this.state.subject}</h3>
 				<br/>
 				</div>
 				<ScreenShareDemo chatRoomID={this.state.id} />
