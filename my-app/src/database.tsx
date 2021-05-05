@@ -63,10 +63,10 @@ export function getUpdate(room_component): void {
     .once("value")
     .then((snapshot) => {
       let newVal = snapshot.val()
-      console.log("Server Result" + JSON.stringify(newVal))
+      // console.log("Server Result" + JSON.stringify(newVal))
       room_component._isMounted = true
       newVal.messages = newVal.messages.messages
-      console.log(newVal)
+      // console.log(newVal)
       room_component.setState(newVal) // update to current values
       room_component._isMounted = false
     })

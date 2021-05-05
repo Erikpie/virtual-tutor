@@ -112,7 +112,7 @@ const ScreenShareDemo = ({ chatRoomID }) => {
       })
 
       // Watch for connection state changes on host
-      pc.onconnectionstatechange = () => {
+      pc.onconnectionstatechange = async () => {
         if (pc.iceConnectionState === "connected") {
           setNumViewers(numViewers + 1)
         }
@@ -148,7 +148,11 @@ const ScreenShareDemo = ({ chatRoomID }) => {
     const availableSessionID = await availableSessionDoc.val()
 
     console.log(availableSessionID)
-    if (!availableSessionID || availableSessionID === "") {
+    if (
+      !availableSessionID ||
+      availableSessionID === "" ||
+      availableSessionID === "occupied"
+    ) {
       alert("Room might be fully occupied, try again or try a new room")
       return
     }
@@ -180,13 +184,6 @@ const ScreenShareDemo = ({ chatRoomID }) => {
       const candidate = new RTCIceCandidate(data.val())
       pc.addIceCandidate(candidate)
     })
-
-    // Remove the availableSessionID on the database
-    database
-      .ref(`rooms/${chatRoomID}`)
-      .child("screenshare")
-      .child("availableSessionID")
-      .remove()
 
     // Update local state to show stream
     setStream(remoteStream)
@@ -227,13 +224,14 @@ const ScreenShareDemo = ({ chatRoomID }) => {
       let occupied = true
 
       for (const connectionID in peerConnections) {
+        console.log(peerConnections[connectionID].iceConnectionState)
         if (peerConnections[connectionID].iceConnectionState === "new") {
           occupied = false
         }
       }
 
       if (occupied) {
-        // addSession(stream)
+        addSession(stream)
       }
     }
 
