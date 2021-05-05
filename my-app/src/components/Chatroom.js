@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Chatroom.css';
+import {getUpdate, initRoom, sendMessage} from '../database.tsx';
 
 import Message from './Message.js';
 
@@ -15,6 +16,12 @@ class Chatroom extends React.Component {
             }]
         };
 
+        initRoom(this)
+
+        setInterval(() => {
+			getUpdate(this);
+		}, 1000);
+
         this.submitMessage = this.submitMessage.bind(this);
     }
 
@@ -27,20 +34,24 @@ class Chatroom extends React.Component {
     }
 
     scrollToBot() {
-        ReactDOM.findDOMNode(this.refs.chats).scrollTop = ReactDOM.findDOMNode(this.refs.chats).scrollHeight;
+        ReactDOM.findDOMNode(this.chats).scrollTop = ReactDOM.findDOMNode(this.refs.chats).scrollHeight;
     }
 
+    // need to fix some s
     submitMessage(e) {
         e.preventDefault();
 
         this.setState({
             chats: this.state.chats.concat([{
                 username: "Student-Placeholder",
-                content: ReactDOM.findDOMNode(this.refs.msg).value
+                content: ReactDOM.findDOMNode(this.msg).value
             }])
         }, () => {
-            ReactDOM.findDOMNode(this.refs.msg).value = "";
+            ReactDOM.findDOMNode(this.msg).value = "";
         });
+
+        let message = this.state.chats + this.state.chats.username + ":" + this.state.chats.content + "\n"
+        sendMessage(this, message);
     }
 
     render() {
@@ -52,6 +63,7 @@ class Chatroom extends React.Component {
                 <ul className="chats" ref="chats">
                     {
                         chats.map((chat) => 
+                            
                             <Message chat={chat} user={username} />
                         )
                     }
